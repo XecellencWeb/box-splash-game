@@ -8,62 +8,65 @@
   </head>
 
   <body>
-    <div class="game-container">
-      <div class="controller-container">
-        <div class="player"></div>
-        <div class="boxes">
-          <div
-            style="--flight: 8; --delay: 1.5; --color-deg: 45"
-            class="box-container"
-          >
-            <div class="box"><i></i><i></i><i></i><i></i><i></i><i></i></div>
-          </div>
-          <div
-            style="--flight: 2; --delay: 3; --color-deg: 180"
-            class="box-container"
-          >
-            <div class="box"><i></i><i></i><i></i><i></i><i></i><i></i></div>
-          </div>
-          <div style="--flight: 5; --delay: 5" class="box-container">
-            <div class="box"><i></i><i></i><i></i><i></i><i></i><i></i></div>
-          </div>
-          <div
-            style="--flight: 0; --delay: 10; --color-deg: 270"
-            class="box-container"
-          >
-            <div class="box"><i></i><i></i><i></i><i></i><i></i><i></i></div>
-          </div>
-        </div>
-
-        <div class="enemy-boxes">
-          <div
-            style="--flight: 8.7; --delay: 5; --color-deg: 25"
-            class="box-container"
-          >
-            <div class="enemy-box">
-              <i></i><i></i><i></i><i></i><i></i><i></i>
+    <div class="game">
+      <p class="game-text">Click anywhere to play</p>
+      <div class="game-container">
+        <div class="controller-container">
+          <div class="player"></div>
+          <div class="boxes">
+            <div
+              style="--flight: 8; --delay: 1.5; --color-deg: 45"
+              class="box-container"
+            >
+              <div class="box"><i></i><i></i><i></i><i></i><i></i><i></i></div>
             </div>
-          </div>
-          <div
-            style="--flight: 5; --delay: 7; --color-deg: 25"
-            class="box-container"
-          >
-            <div class="enemy-box">
-              <i></i><i></i><i></i><i></i><i></i><i></i>
+            <div
+              style="--flight: 2; --delay: 3; --color-deg: 180"
+              class="box-container"
+            >
+              <div class="box"><i></i><i></i><i></i><i></i><i></i><i></i></div>
             </div>
-          </div>
-          <div
-            style="--flight: 3; --delay: 4; --color-deg: 25"
-            class="box-container"
-          >
-            <div class="enemy-box">
-              <i></i><i></i><i></i><i></i><i></i><i></i>
+            <div style="--flight: 5; --delay: 5" class="box-container">
+              <div class="box"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            </div>
+            <div
+              style="--flight: 0; --delay: 10; --color-deg: 270"
+              class="box-container"
+            >
+              <div class="box"><i></i><i></i><i></i><i></i><i></i><i></i></div>
             </div>
           </div>
 
-          <div style="--flight: 0.5; --color-deg: 45" class="box-container">
-            <div class="enemy-box">
-              <i></i><i></i><i></i><i></i><i></i><i></i>
+          <div class="enemy-boxes">
+            <div
+              style="--flight: 8.7; --delay: 5; --color-deg: 25"
+              class="box-container"
+            >
+              <div class="enemy-box">
+                <i></i><i></i><i></i><i></i><i></i><i></i>
+              </div>
+            </div>
+            <div
+              style="--flight: 5; --delay: 7; --color-deg: 25"
+              class="box-container"
+            >
+              <div class="enemy-box">
+                <i></i><i></i><i></i><i></i><i></i><i></i>
+              </div>
+            </div>
+            <div
+              style="--flight: 3; --delay: 4; --color-deg: 25"
+              class="box-container"
+            >
+              <div class="enemy-box">
+                <i></i><i></i><i></i><i></i><i></i><i></i>
+              </div>
+            </div>
+
+            <div style="--flight: 0.5; --color-deg: 45" class="box-container">
+              <div class="enemy-box">
+                <i></i><i></i><i></i><i></i><i></i><i></i>
+              </div>
             </div>
           </div>
         </div>
@@ -92,7 +95,7 @@
 
       const smashSound = new Audio("./sounds/effects/smash.wav");
       const failSound = new Audio("./sounds/effects/game-over.mp3");
-      
+
       const startGame = () => {
         document.querySelector("#startGame").checked = false;
         startAnimation();
@@ -100,9 +103,9 @@
         music1.volume = 0.1;
         music1.play();
 
-        music1.onended = ()=>{
-          setTimeout(() => music1.play(), 5000)
-        }
+        music1.onended = () => {
+          setTimeout(() => music1.play(), 5000);
+        };
       };
 
       window.onload = () => {
@@ -148,7 +151,7 @@
       });
       document.querySelectorAll(".enemy-box").forEach((box) => {
         box.addEventListener("animationend", () => {
-          music1.pause()
+          music1.pause();
           failSound.play();
           stopAnimation();
           document.querySelector("#gameOver").checked = true;
