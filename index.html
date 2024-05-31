@@ -99,14 +99,16 @@
       document.querySelector("#startGame-btn").onclick = (e) => {
         e.stopPropagation();
         document.querySelector("#startGame").checked = false;
+        document.body.requestFullscreen()
         startAnimation();
 
         music1.volume = 0.1;
         music1.play();
-
         music1.onended = () => {
           setTimeout(() => music1.play(), 5000);
         };
+
+
       };
 
       window.onload = () => {
