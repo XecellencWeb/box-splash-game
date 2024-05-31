@@ -19,12 +19,6 @@ html {
 body {
   height: 100svh;
   overflow: clip;
-
-  &:active {
-    --playerContHeight: 19em;
-    --transitionDuration: 1.5s;
-    --playerHeight: 1.1em;
-  }
 }
 
 #gameOver,
@@ -99,11 +93,11 @@ body {
   height: 12em;
 }
 
-.game-text{
+.game-text {
   font-size: 5vmin;
   word-break: break-word;
   text-align: center;
-  margin: .5em 0;
+  margin: 0.5em 0;
 }
 
 .game-container {
@@ -119,6 +113,12 @@ body {
   );
   animation: background-move 3s linear infinite;
   overflow: clip;
+
+  &:active {
+    --playerContHeight: 19em;
+    --transitionDuration: 2s;
+    --playerHeight: 1.1em;
+  }
 
   &::before,
   &::after {
