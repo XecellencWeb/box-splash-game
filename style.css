@@ -1,0 +1,252 @@
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
+
+:root {
+  --score: "Score: 0";
+  --high-score: "High Score: 0";
+}
+
+*,
+*::before,
+*::after {
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 9vmin;
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  height: 100svh;
+  overflow: clip;
+}
+
+#gameOver,
+#startGame {
+  display: none;
+}
+
+#startGame:checked + .reset-container {
+  display: block;
+}
+#gameOver:checked + .reset-container {
+  display: block;
+}
+
+.reset-container {
+  display: none;
+  position: absolute;
+  inset: 0;
+  background: #0007;
+  backdrop-filter: blur(2em);
+
+  .reset-game {
+    position: absolute;
+    width: 7em;
+    height: 4em;
+    background: #fff;
+    inset: 0;
+    margin: auto;
+    text-align: center;
+    align-content: center;
+    border-radius: 0.5em;
+    outline: 0.25em solid #2c7a3c;
+    box-shadow: inset 0 0 0.15em #0007, inset 0 0 0.25em #0007,
+      inset 0 0 0.5em #0007, 0 0 0.5em #ffa50070, 0 0 1em #ffa50070,
+      0 0 2.5em #ffa50030;
+
+    button {
+      font-size: 6vmin;
+      padding: 0.2em 1em;
+      border-radius: 0.5em;
+      border: none;
+      background: orange;
+      cursor: pointer;
+      text-shadow: 0 0 0.1em #000;
+      box-shadow: inset 0 0 0.25em #0007, inset 0 0 0.5em #0007,
+        0.2em 0.2em 1em #0007;
+      scale: 0.9;
+      &:active {
+        scale: 1;
+        filter: brightness(1.2);
+      }
+    }
+
+    * {
+      line-height: normal;
+      margin: 0;
+    }
+
+    h2 {
+      filter: brightness(1.2);
+      color: #2c7a3c;
+      text-shadow: 0 0 0.05em #000, -0.5em -0.5em 3em #000;
+    }
+  }
+}
+
+.game-container {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  border: 2px solid;
+  width: 10em;
+  aspect-ratio: 1;
+  background-image: repeating-linear-gradient(
+    53.3deg,
+    #fff2,
+    transparent,
+    #fff2 2em
+  );
+  animation: background-move 3s linear infinite;
+  overflow: clip;
+
+  &:active {
+    --playerContHeight: 19em;
+    --transitionDuration: 1.5s;
+    --playerHeight: 1.1em;
+  }
+
+  &::before, &::after{
+    font-size: 7vmin;
+  }
+
+  &::before {
+    content: var(--score);
+  }
+  &::after {
+    content: var(--high-score);
+  }
+}
+@keyframes background-move {
+  to {
+    background-position-x: -10em;
+  }
+}
+
+.controller-container {
+  /* background: rgba(40, 210, 253, 0.164); */
+  width: 10em;
+  height: var(--playerContHeight, 10em);
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  transition: height var(--transitionDuration, 3s);
+
+  .player {
+    position: absolute;
+    width: 1em;
+    height: var(--playerHeight, 1em);
+    left: 2em;
+    top: 9em;
+    background: orange;
+    border-radius: 100vw;
+    background-image: radial-gradient(circle at top, transparent, #000);
+  }
+}
+
+.box-container.game-started {
+  animation: move-box 12s calc(-1s * var(--delay)) linear infinite;
+}
+
+.box-container {
+  --flight: 0;
+  --delay: 0;
+  --color-deg: 0;
+  position: absolute;
+  top: 0;
+  left: -2em;
+  width: 14em;
+  height: calc(100% - (var(--flight) * 1em));
+  /* background: #00f1; */
+  container-type: size;
+
+  .box,
+  .enemy-box {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 1em;
+    transform-style: preserve-3d;
+    aspect-ratio: 1;
+    animation: rotation-movement 1s calc(var(--delay) / -10 * 1s) linear
+        infinite,
+      hit paused 100ms forwards;
+
+    i {
+      position: absolute;
+      inset: 0;
+      background: blue;
+      box-shadow: inset 0 0 0.25em #333;
+      transition: all 500ms ease-out;
+      filter: hue-rotate(calc(1deg * var(--color-deg)));
+    }
+
+    i:nth-child(1) {
+      transform: translateZ(var(--itz, 0.5em));
+    }
+    i:nth-child(2) {
+      transform: rotateY(90deg) translateZ(var(--itz, 0.5em));
+    }
+    i:nth-child(3) {
+      transform: rotateY(180deg) translateZ(var(--itz, 0.5em));
+    }
+    i:nth-child(4) {
+      transform: rotateY(270deg) translateZ(var(--itz, 0.5em));
+    }
+    i:nth-child(5) {
+      transform: rotatex(90deg) translateZ(var(--itz, 0.5em));
+    }
+    i:nth-child(6) {
+      transform: rotateX(270deg) translateZ(var(--itz, 0.5em));
+    }
+
+    @container (4em < width < 6em) and (9em < height < 11em) {
+      animation-play-state: running;
+    }
+    @container (width < 2em) {
+      animation: none;
+    }
+  }
+
+  .enemy-box {
+    --itz: 0.25em;
+    animation: rotation-movement 1s linear infinite, enemy-hit 100ms paused;
+
+    /* animation: none; */
+    i {
+      background: red;
+    }
+
+    @container (4em < width < 6em) and (9em < height < 11em) {
+      animation-play-state: running;
+    }
+    @container (width < 2em) {
+      animation: none;
+    }
+  }
+}
+
+@keyframes rotation-movement {
+  from {
+    transform: perspective(5em) rotateY(0deg) rotateX(0deg);
+  }
+  to {
+    transform: perspective(5em) rotateY(360deg) rotateX(360deg);
+  }
+}
+@keyframes hit {
+  to {
+    --itz: 5em;
+  }
+}
+@keyframes enemy-hit {
+  to {
+    --itz: 0.25em;
+  }
+}
+@keyframes move-box {
+  to {
+    width: 1em;
+  }
+}

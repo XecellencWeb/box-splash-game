@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Css only game</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <div class="game-container">
+      <div class="controller-container">
+        <div class="player"></div>
+        <div class="boxes">
+          <div
+            style="--flight: 8; --delay: 1.5; --color-deg: 45"
+            class="box-container"
+          >
+            <div class="box"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          </div>
+          <div
+            style="--flight: 2; --delay: 3; --color-deg: 180"
+            class="box-container"
+          >
+            <div class="box"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          </div>
+          <div style="--flight: 5; --delay: 5" class="box-container">
+            <div class="box"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          </div>
+          <div
+            style="--flight: 0; --delay: 10; --color-deg: 270"
+            class="box-container"
+          >
+            <div class="box"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          </div>
+        </div>
+
+        <div class="enemy-boxes">
+          <div
+            style="--flight: 8.7; --delay: 5; --color-deg: 25"
+            class="box-container"
+          >
+            <div class="enemy-box">
+              <i></i><i></i><i></i><i></i><i></i><i></i>
+            </div>
+          </div>
+          <div
+            style="--flight: 5; --delay: 7; --color-deg: 25"
+            class="box-container"
+          >
+            <div class="enemy-box">
+              <i></i><i></i><i></i><i></i><i></i><i></i>
+            </div>
+          </div>
+          <div
+            style="--flight: 3; --delay: 4; --color-deg: 25"
+            class="box-container"
+          >
+            <div class="enemy-box">
+              <i></i><i></i><i></i><i></i><i></i><i></i>
+            </div>
+          </div>
+
+          <div style="--flight: 0.5; --color-deg: 45" class="box-container">
+            <div class="enemy-box">
+              <i></i><i></i><i></i><i></i><i></i><i></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <input id="gameOver" type="checkbox" />
+    <div class="reset-container">
+      <div class="reset-game">
+        <h2>Game Over!</h2>
+        <button onclick="RestartGame()">Restart Game</button>
+      </div>
+    </div>
+
+    <input id="startGame" type="checkbox" checked />
+    <div class="reset-container">
+      <div class="reset-game">
+        <h2>Box Splash</h2>
+        <button onclick="startGame()">Play Now</button>
+      </div>
+    </div>
+    <script>
+      let score = 0;
+      let highscore = JSON.parse(localStorage.getItem("high-score")) || 0;
+      const music1 = new Audio("./sounds/music/1.mp3");
+      const music2 = new Audio("./sounds/music/2.mp3");
+
+      const smashSound = new Audio("./sounds/effects/smash.wav");
+      const failSound = new Audio("./sounds/effects/game-over.mp3");
+      
+      const startGame = () => {
+        document.querySelector("#startGame").checked = false;
+        startAnimation();
+
+        music1.volume = 0.1;
+        music1.play();
+
+        music1.onended = ()=>{
+          setTimeout(() => music1.play(), 5000)
+        }
+      };
+
+      window.onload = () => {
+        document.documentElement.style.setProperty(
+          "--high-score",
+          `"High Score: ${highscore}"`
+        );
+        stopAnimation();
+      };
+
+      const RestartGame = () => {
+        window.location.reload();
+      };
+
+      const stopAnimation = () => {
+        document
+          .querySelectorAll(".box-container")
+          .forEach((cont) => cont.classList.remove("game-started"));
+      };
+      const startAnimation = () => {
+        document
+          .querySelectorAll(".box-container")
+          .forEach((cont) => cont.classList.add("game-started"));
+      };
+      document.querySelectorAll(".box").forEach((box) => {
+        box.addEventListener("animationend", () => {
+          score++;
+          document.documentElement.style.setProperty(
+            "--score",
+            `"Score: ${score}"`
+          );
+
+          smashSound.play();
+
+          if (score > highscore) {
+            localStorage.setItem("high-score", JSON.stringify(score));
+            document.documentElement.style.setProperty(
+              "--high-score",
+              `"High Score: ${score}"`
+            );
+          }
+        });
+      });
+      document.querySelectorAll(".enemy-box").forEach((box) => {
+        box.addEventListener("animationend", () => {
+          music1.pause()
+          failSound.play();
+          stopAnimation();
+          document.querySelector("#gameOver").checked = true;
+        });
+      });
+    </script>
+  </body>
+</html>
