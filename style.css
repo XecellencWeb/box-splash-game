@@ -116,7 +116,7 @@ body {
 
   &:active {
     --playerContHeight: 19em;
-    --transitionDuration: 2s;
+    --transitionDuration: 3s;
     --playerHeight: 1.1em;
   }
 
@@ -145,7 +145,7 @@ body {
   position: absolute;
   left: 0;
   bottom: 0;
-  transition: height var(--transitionDuration, 4s);
+  transition: height var(--transitionDuration, 5s);
 
   .player {
     position: absolute;
