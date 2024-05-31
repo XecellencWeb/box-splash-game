@@ -145,7 +145,7 @@ body {
   position: absolute;
   left: 0;
   bottom: 0;
-  transition: height var(--transitionDuration, 3s);
+  transition: height var(--transitionDuration, 4s);
 
   .player {
     position: absolute;
