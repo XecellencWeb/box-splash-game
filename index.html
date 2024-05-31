@@ -76,7 +76,7 @@
     <div class="reset-container">
       <div class="reset-game">
         <h2>Game Over!</h2>
-        <button onclick="RestartGame(e)">Restart Game</button>
+        <button id="restartGame-btn">Restart Game</button>
       </div>
     </div>
 
@@ -84,7 +84,7 @@
     <div class="reset-container">
       <div class="reset-game">
         <h2>Box Splash</h2>
-        <button onclick="startGame(e)">Play Now</button>
+        <button id="startGame-btn">Play Now</button>
       </div>
     </div>
     <script>
@@ -96,7 +96,7 @@
       const smashSound = new Audio("./sounds/effects/smash.wav");
       const failSound = new Audio("./sounds/effects/game-over.mp3");
 
-      const startGame = (e) => {
+      document.querySelector("#startGame-btn").onclick = (e) => {
         e.stopPropagation();
         document.querySelector("#startGame").checked = false;
         startAnimation();
@@ -117,7 +117,7 @@
         stopAnimation();
       };
 
-      const RestartGame = (e) => {
+      document.querySelector("#restartGame-btn").onclick = (e) => {
         e.stopPropagation();
         window.location.reload();
       };
